@@ -1,11 +1,11 @@
 package nutridlifecom;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class FichaNutri {
 	
 	private Cliente cliente;
-	private LocalDate dataCadastro;
+	private LocalDateTime dataCadastro;
 	private String peso;
 	private Double percentualGordura;
 	private String sensacaoFisica;
@@ -16,10 +16,10 @@ public class FichaNutri {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public LocalDate getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	public String getPeso() {

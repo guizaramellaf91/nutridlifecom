@@ -1,6 +1,7 @@
 package nutridlifecom;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,29 +19,29 @@ public class Main {
 		
 	private Main() {
 			
+		System.out.println("-- BEM VINDO AO NUTRIDLIFECOM -- \n");
+		
 		l = new Scanner(System.in);
 		executar = true;
 		lsClientes = new ArrayList<Cliente>();
 		lsFichaNutri = new ArrayList<FichaNutri>();
 		
-		System.out.println("-- BEM VINDO AO NUTRIDLIFECOM -- \n");		
-	
 		while (executar) {
 			String item = menu();
 
-			if (item.equalsIgnoreCase("1")) {
+			if (item.equalsIgnoreCase("c")) {
 				
 				listarClientes();
 				
-			} else if (item.equalsIgnoreCase("2")) {
+			} else if (item.equalsIgnoreCase("f")) {
 				
 				listarFichas();
 				
-			} else if (item.equalsIgnoreCase("3")) {
+			} else if (item.equalsIgnoreCase("a")) {
 				
 				listarAlimentos();
 				
-			} else if (item.equalsIgnoreCase("4")) {
+			} else if (item.equalsIgnoreCase("e")) {
 				
 				System.out.println("\nAplicação encerrada!\n");
 				executar = false;
@@ -55,18 +56,18 @@ public class Main {
 	private String menu() {
 		
 		System.out.println("\nSelecione a opção:\n");
-		System.out.println("1 - Clientes");
-		System.out.println("2 - Ficha dos Clientes");
-		System.out.println("3 - Alimentos");
-		System.out.println("4 - Sair");
+		System.out.println("[C] - Clientes");
+		System.out.println("[F] - Ficha dos Clientes");
+		System.out.println("[A] - Alimentos");
+		System.out.println("[E] - Sair");
 		return l.nextLine();
 	}
 	
 	private String menuClientes() {
 				
 		System.out.println("\nSelecione a opção:\n");
-		System.out.println("1 - Novo Cliente");
-		System.out.println("2 - Voltar");
+		System.out.println("[1] - Novo Cliente");
+		System.out.println("[2] - Voltar");
 		return l.nextLine();
 	}
 	
@@ -101,7 +102,6 @@ public class Main {
 			
 			if(novaFicha.equalsIgnoreCase("s")) {
 				
-				executar = false;
 				cadastrarFicha(cliente);
 			} 
 		} catch (Exception e) {
@@ -117,7 +117,7 @@ public class Main {
 			System.out.println("-- Cadastro de Ficha Nutricional --\n");
 			FichaNutri fichaNutri = new FichaNutri();
 			fichaNutri.setCliente(cliente);
-			fichaNutri.setDataCadastro(LocalDate.now());
+			fichaNutri.setDataCadastro(LocalDateTime.now());
 			fichaNutri.setPercentualGordura(Double.valueOf(textInput("% de gordura: ")));
 			fichaNutri.setPeso(textInput("Peso: "));
 			fichaNutri.setSensacaoFisica(textInput("Sensação Física: "));
@@ -153,8 +153,8 @@ public class Main {
 			for (int i = 0; i < lsFichaNutri.size(); i++) {
 				
 				FichaNutri f = lsFichaNutri.get(i);
-				System.out.println("N° Registro: " + i + "\n" +
-				"\tData Cadastro: " + f.getDataCadastro() + "\n" +
+				System.out.println("N° Ficha: " + i + "\n" +
+				"\tData Cadastro: " + f.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n" +
 				"\tCliente: " + f.getCliente().getNome() + "\n" +
 				"\t% de gordura: " + f.getPercentualGordura() + "\n" +
 				"\tPeso: " + f.getPeso() + "\n" +
@@ -162,8 +162,6 @@ public class Main {
 			}
 			System.out.println("\nFim da lista\n");
 		}	
-		
-		executar = true;
 	}
 	
 	private void listarClientes() {
@@ -176,7 +174,7 @@ public class Main {
 			System.out.println("\nLista de Cadastros\n");
 			for (int i = 0; i < lsClientes.size(); i++) {
 				Cliente c = lsClientes.get(i);
-				System.out.println("N° Registro: " + i + "\n" +
+				System.out.println("N° Cliente: " + i + "\n" +
 				"\tNome: " + c.getNome() + "\n" + 
 				"\tE-mail: " + c.getEmail() + "\n" +
 				"\tCelular: " + c.getCelular() + "\n" +
@@ -192,11 +190,11 @@ public class Main {
 			if (item.equalsIgnoreCase("1")) {
 				
 				cadastrarCliente();
-				break;
+
 			} else if (item.equalsIgnoreCase("2")) {
 				
-				menu();
-				break;
+				return;
+
 			} else {
 				System.out.println("\nNenhum opção válida selecionada!\n");
 			}
