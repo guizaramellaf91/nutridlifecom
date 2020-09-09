@@ -10,7 +10,7 @@ public class FichaNutri {
 	private Double percentualGordura;
 	private String sensacaoFisica;
 	private String restricaoAlimentar;
-	private Double metaCalorica;
+	private Integer metaCalorica;
 	
 	public Cliente getCliente() {
 		return cliente;
@@ -48,10 +48,10 @@ public class FichaNutri {
 	public void setRestricaoAlimentar(String restricaoAlimentar) {
 		this.restricaoAlimentar = restricaoAlimentar;
 	}
-	public Double getMetaCalorica() {
+	public Integer getMetaCalorica() {
 		return metaCalorica;
 	}
-	public void setMetaCalorica(Double metaCalorica) {
+	public void setMetaCalorica(Integer metaCalorica) {
 		this.metaCalorica = metaCalorica;
 	}
 }
