@@ -21,7 +21,7 @@ public class Main {
 	private Main() {
 
 		try {
-			
+						
 			System.out.println("\n\t-- BEM VINDO AO NUTRIDLIFECOM by DTIDIGITAL -- \n");
 
 			l = new Scanner(System.in);
@@ -29,9 +29,11 @@ public class Main {
 			lsClientes = new ArrayList<Cliente>();
 			lsFichaNutri = new ArrayList<FichaNutri>();
 			lsAlimentos = new ArrayList<Alimento>();
-
+			
 			populaAlimentos();
-
+			
+	        gerarProabilidades();
+			
 			while (executar) {
 				String item = menu();
 				
@@ -101,14 +103,14 @@ public class Main {
 			fichaNutri.setSensacaoFisica(textInput("Sensação Física: "));
 			fichaNutri.setRestricaoAlimentar(textInput("Restrição Alimentar: "));
 			fichaNutri.setMetaCalorica(Integer.valueOf(textInput("Informe a meta calórica: ")));
-
+			
 			String cadastrar = textInput("Confirmar ficha (S/N) ?");
 			if (cadastrar.equalsIgnoreCase("s")) {
 
 				System.out.println("Cadastro de ficha realizado com sucesso!\n");
 				lsFichaNutri.add(fichaNutri);
 				listarFichas(cliente);
-
+								
 			} else if (cadastrar.equalsIgnoreCase("n")) {
 				System.out.println("Cadastro cancelado!\n");
 			} else {
@@ -136,7 +138,7 @@ public class Main {
 							"\t\tPeso: " + f.getPeso() + "\n" + 
 							"\t\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
 							"\t\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
-							"\t\tInforme a meta de calorias: " + f.getMetaCalorica() + "\n");
+							"\t\tMeta Calórica: " + f.getMetaCalorica() + "\n");
 				}
 			}
 		}
@@ -212,7 +214,7 @@ public class Main {
 			System.out.println("\nLista de Alimentos\n");
 			for (int i = 0; i < lsAlimentos.size(); i++) {
 				Alimento a = lsAlimentos.get(i);
-				System.out.println("N° Alimento: " + i);
+				System.out.println("\tN°: " + i);
 				System.out.println("\tNome: " + a.getNome() + "\n" + "\tGrupo Alimentar: " + a.getGrupoAlimentar()
 						+ "\n" + "\tValor Calórico: " + a.getCaloria() + "\n");
 			}
@@ -242,6 +244,39 @@ public class Main {
 		return l.nextLine();
 	}
 
+	private void gerarProabilidades() {
+		
+		combinacoesAlimento(150);
+	}
+	
+	private void combinacoesAlimento(Integer metaCalorica) {
+				
+		List<Alimento> alimentos = new ArrayList<Alimento>();
+		List<Object> items = new ArrayList<Object>();
+			
+		for (int i = 0; i < lsAlimentos.size() - 2; i++)
+			for (int j = i + 1; j < lsAlimentos.size() - 1; j++)
+				for (int k = j + 1; k < lsAlimentos.size(); k++)
+			
+			if (lsAlimentos.get(i).getCaloria() + 
+					lsAlimentos.get(k).getCaloria() + 
+					lsAlimentos.get(j).getCaloria() <= metaCalorica) {
+				
+				alimentos = new ArrayList<Alimento>();
+				alimentos.add(lsAlimentos.get(i));
+				alimentos.add(lsAlimentos.get(j));
+				alimentos.add(lsAlimentos.get(k));
+				items.add(alimentos);
+			}
+		
+		System.out.println("\nPossíveis combinações: " + items.size() + " \n");
+		
+		for(Object obj : items) {
+			
+			System.out.println(obj.getClass().toString());
+		}
+	}
+	
 	private void populaAlimentos() {
 
 		Alimento a1 = new Alimento();
