@@ -189,7 +189,7 @@ public class Main {
 				cadastrar = textInput("\nO e-mail informado não existe! Deseja cadastrar agora? (S/N)\n");
 				if(cadastrar.equalsIgnoreCase("s")) {
 					cadastrarCliente();
-				}else {
+				} else {
 					break;
 				}
 			}
@@ -198,7 +198,7 @@ public class Main {
 			cadastrar = textInput("\nNão existe cliente cadastrado! Deseja cadastrar agora? (S/N)\n");
 			if(cadastrar.equalsIgnoreCase("s")) {
 				cadastrarCliente();
-			}
+			} 
 		}
 	}
 
