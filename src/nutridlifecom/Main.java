@@ -20,28 +20,37 @@ public class Main {
 
 	private Main() {
 
-		System.out.println("\n\t-- BEM VINDO AO NUTRIDLIFECOM by DTIDIGITAL -- \n");
+		try {
+			
+			System.out.println("\n\t-- BEM VINDO AO NUTRIDLIFECOM by DTIDIGITAL -- \n");
 
-		l = new Scanner(System.in);
-		executar = true;
-		lsClientes = new ArrayList<Cliente>();
-		lsFichaNutri = new ArrayList<FichaNutri>();
-		lsAlimentos = new ArrayList<Alimento>();
+			l = new Scanner(System.in);
+			executar = true;
+			lsClientes = new ArrayList<Cliente>();
+			lsFichaNutri = new ArrayList<FichaNutri>();
+			lsAlimentos = new ArrayList<Alimento>();
 
-		populaAlimentos();
+			populaAlimentos();
 
-		while (executar) {
-			String item = menu();
-			if (item.equalsIgnoreCase("c")) {
-				listarClientes();
-			} else if (item.equalsIgnoreCase("a")) {
-				listarAlimentos();
-			} else if (item.equalsIgnoreCase("e")) {
-				System.out.println("\nAplicação encerrada!\n");
-				executar = false;
-			} else {
-				System.out.println("\nNenhum opção válida selecionada!\n");
+			while (executar) {
+				String item = menu();
+				
+				if(item.equalsIgnoreCase("n")) {
+					validaClienteFicha();
+			    }else if (item.equalsIgnoreCase("c")) {
+					listarClientes();
+				} else if (item.equalsIgnoreCase("a")) {
+					listarAlimentos();
+				} else if (item.equalsIgnoreCase("e")) {
+					System.out.println("\nAplicação encerrada!\n");
+					executar = false;
+				} else {
+					System.out.println("\nNenhum opção válida selecionada!\n");
+				}
 			}
+			
+		} catch (Exception e) {		
+			System.out.println("[ERROR] Ops! Main: " + e.getMessage() + "\n");
 		}
 	}
 
@@ -83,7 +92,7 @@ public class Main {
 
 		try {
 
-			System.out.println("-- Cadastro de Ficha Nutricional --\n");
+			System.out.println("\n-- Cadastro de Ficha Nutricional para " + cliente.getNome() + " --\n");
 			FichaNutri fichaNutri = new FichaNutri();
 			fichaNutri.setCliente(cliente);
 			fichaNutri.setDataCadastro(LocalDateTime.now());
@@ -115,17 +124,19 @@ public class Main {
 		if (lsFichaNutri.size() == 0) {
 			System.out.println("\nNão existe ficha cadastrada para o cliente!\n");
 		} else {
-			System.out.println("\n\t== Histórico de fichas de " + cliente.getNome() + " ==\n");
+			System.out.println("\n\t\t== Histórico de fichas de " + cliente.getNome() + " ==\n");
 			for (int i = 0; i < lsFichaNutri.size(); i++) {
 
 				if(lsFichaNutri.get(i).getCliente().equals(cliente)) {
 					FichaNutri f = lsFichaNutri.get(i);
-					System.out.println("\tN° Ficha: " + i + "\n" + "\tData Cadastro: "
-							+ f.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n"
-							+ "\tCliente: " + f.getCliente().getNome() + "\n" + "\t% de gordura: "
-							+ f.getPercentualGordura() + "\n" + "\tPeso: " + f.getPeso() + "\n" + "\tSensação Física: "
-							+ f.getSensacaoFisica() + "\n" + "\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n"
-							+ "\tInforme a meta de calorias: " + f.getMetaCalorica() + "\n");
+					System.out.println("\t\tN° Ficha: " + i + "\n" + 
+							"\t\tData Cadastro: " + f.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n" + 
+							"\t\tCliente: " + f.getCliente().getNome() + "\n" + 
+							"\t\t% de gordura: "+ f.getPercentualGordura() + "\n" + 
+							"\t\tPeso: " + f.getPeso() + "\n" + 
+							"\t\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
+							"\t\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
+							"\t\tInforme a meta de calorias: " + f.getMetaCalorica() + "\n");
 				}
 			}
 		}
@@ -158,18 +169,35 @@ public class Main {
 			String item = menuClientes();
 			if (item.equalsIgnoreCase("1")) {
 				cadastrarCliente();
-			} else if (item.equalsIgnoreCase("2")) {
-				
-				String informeEmail = textInput("\nInforme o e-mail do cliente para prosseguir!\n");
-				for(Cliente c : lsClientes) {
-					if(c.getEmail().equals(informeEmail)) {
-						cadastrarFicha(c);
-					}
-				}
+			} else if (item.equalsIgnoreCase("2")) {			
+				validaClienteFicha();
 			} else if (item.equalsIgnoreCase("3")) {
 				return;
 			} else {
 				System.out.println("\nNenhum opção válida selecionada!\n");
+			}
+		}
+	}
+
+	private void validaClienteFicha() {
+		String cadastrar;
+		String informeEmail = textInput("\nInforme o e-mail do cliente para prosseguir!\n");
+		for(Cliente c : lsClientes) {
+			if(c.getEmail().equals(informeEmail)) {
+				cadastrarFicha(c);
+			}else {
+				cadastrar = textInput("\nO e-mail informado não existe! Deseja cadastrar agora? (S/N)\n");
+				if(cadastrar.equalsIgnoreCase("s")) {
+					cadastrarCliente();
+				}else {
+					break;
+				}
+			}
+		}
+		if(lsClientes.size() == 0) {
+			cadastrar = textInput("\nNão existe cliente cadastrado! Deseja cadastrar agora? (S/N)\n");
+			if(cadastrar.equalsIgnoreCase("s")) {
+				cadastrarCliente();
 			}
 		}
 	}
