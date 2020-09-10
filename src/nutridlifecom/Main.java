@@ -36,7 +36,7 @@ public class Main {
 			lsAlimentos = new ArrayList<Alimento>();
 			
 			populaAlimentos();
-							
+								
 			while (executar) {
 				String item = menu();
 				
@@ -281,14 +281,6 @@ public class Main {
 							lsAlimentos.get(j).getCaloria() + 
 							lsAlimentos.get(k).getCaloria() <= metaCalorica) {
 						
-						if (lsAlimentos.get(i).getGrupo() == lsAlimentos.get(j).getGrupo()) {
-							break;
-						} else if(lsAlimentos.get(j).getGrupo() == lsAlimentos.get(k).getGrupo()) {
-							break;
-						} else if(lsAlimentos.get(i).getGrupo() == lsAlimentos.get(k).getGrupo()) {
-							break;
-						}
-						
 						alimentoCombinado = new AlimentoCombinado();
 						alimentoCombinado.setAlimento1(lsAlimentos.get(i));
 						alimentoCombinado.setAlimento2(lsAlimentos.get(j));
@@ -296,7 +288,17 @@ public class Main {
 						lsAlimentoCombinado.add(alimentoCombinado);
 					}
 		
-		System.out.println("\tNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
+		for (int i = 0; i < lsAlimentoCombinado.size(); i++) {
+
+			if (lsAlimentoCombinado.get(i).getAlimento1().getGrupo().equals(lsAlimentoCombinado.get(i).getAlimento2().getGrupo()) 
+					|| lsAlimentoCombinado.get(i).getAlimento2().getGrupo().equals(lsAlimentoCombinado.get(i).getAlimento3().getGrupo())
+					|| lsAlimentoCombinado.get(i).getAlimento1().getGrupo().equals(lsAlimentoCombinado.get(i).getAlimento3().getGrupo())) {
+				lsAlimentoCombinado.remove(i);
+				i--;
+			}
+		}
+		
+		System.out.println("\tSugestões calóricas: " + lsAlimentoCombinado.size() + "\n");
 		int numeroDieta = 0;
 		for(AlimentoCombinado a : lsAlimentoCombinado) {
 			numeroDieta++;
