@@ -107,7 +107,7 @@ public class Main {
 			fichaNutri.setRestricaoAlimentar(textInput("Restrição Alimentar: "));
 			fichaNutri.setMetaCalorica(Integer.valueOf(textInput("Informe a meta calórica: ")));
 			
-			combinacoesCaloricas(fichaNutri.getMetaCalorica());
+			combinacoesCaloricas(fichaNutri.getMetaCalorica(),fichaNutri);
 			
 			String cadastrar = textInput("Confirmar ficha (S/N) ?");
 			if (cadastrar.equalsIgnoreCase("s")) {
@@ -144,7 +144,7 @@ public class Main {
 							"\t\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
 							"\t\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
 							"\t\tMeta Calórica: " + f.getMetaCalorica() + "\n");
-					combinacoesCaloricas(f.getMetaCalorica());
+					combinacoesCaloricas(f.getMetaCalorica(),f);
 				}
 			}
 		}
@@ -266,7 +266,7 @@ public class Main {
 		return l.nextLine();
 	}
 
-	private void combinacoesCaloricas(Integer metaCalorica) {
+	private void combinacoesCaloricas(Integer metaCalorica, FichaNutri fichaNutri) {
 				
 		AlimentoCombinado alimentoCombinado;
 		List<AlimentoCombinado> lsAlimentoCombinado = new ArrayList<AlimentoCombinado>();
@@ -285,7 +285,7 @@ public class Main {
 						lsAlimentoCombinado.add(alimentoCombinado);
 					}
 		
-		System.out.println("\n\tMeta: " + metaCalorica + "\n\tNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
+		System.out.println("\n\t\tMeta: " + metaCalorica + "\n\t\tNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
 		for(AlimentoCombinado a : lsAlimentoCombinado) {
 			
 			System.out.println("\t=== Dieta Sugerida === \n\t" + 
