@@ -6,7 +6,6 @@ public class Cliente {
 	private String email;
 	private String dataNascimento;
 	private String celular;
-	private String telefone;
 	private String endereco;
 	
 	public String getNome() {
@@ -32,12 +31,6 @@ public class Cliente {
 	}
 	public void setCelular(String celular) {
 		this.celular = celular;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
 	}
 	public String getEndereco() {
 		return endereco;

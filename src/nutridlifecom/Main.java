@@ -20,7 +20,7 @@ public class Main {
 	private List<Alimento> lsAlimentos;
 
 	public static void main(String[] args) throws Throwable {
-	
+			
 		new Main();
 	}
 
@@ -36,7 +36,7 @@ public class Main {
 			lsAlimentos = new ArrayList<Alimento>();
 			
 			populaAlimentos();
-						
+							
 			while (executar) {
 				String item = menu();
 				
@@ -68,7 +68,6 @@ public class Main {
 			cliente.setNome(textInput("Nome:"));
 			cliente.setEmail(textInput("E-mail: "));
 			cliente.setCelular(textInput("Celular: "));
-			cliente.setTelefone(textInput("Telefone: "));
 			cliente.setDataNascimento(textInput("Nascimento: "));
 			cliente.setEndereco(textInput("Endereço: "));
 
@@ -131,19 +130,19 @@ public class Main {
 		if (lsFichaNutri.size() == 0) {
 			System.out.println("\nNão existe ficha cadastrada para o cliente!\n");
 		} else {
-			System.out.println("\n\t\t== Histórico de fichas de " + cliente.getNome() + " ==\n");
+			System.out.println("\n\t== Histórico de fichas de " + cliente.getNome() + " ==\n");
 			for (int i = 0; i < lsFichaNutri.size(); i++) {
 
 				if(lsFichaNutri.get(i).getCliente().equals(cliente)) {
 					FichaNutri f = lsFichaNutri.get(i);
-					System.out.println("\t\tN° Ficha: " + i + "\n" + 
-							"\t\tData Cadastro: " + f.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n" + 
-							"\t\tCliente: " + f.getCliente().getNome() + "\n" + 
-							"\t\t% de gordura: "+ f.getPercentualGordura() + "\n" + 
-							"\t\tPeso: " + f.getPeso() + "\n" + 
-							"\t\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
-							"\t\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
-							"\t\tMeta Calórica: " + f.getMetaCalorica() + "\n");
+					System.out.println("\tN° Ficha: " + i + "\n" + 
+							"\tData Cadastro: " + f.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n" + 
+							"\tCliente: " + f.getCliente().getNome() + "\n" + 
+							"\t% de gordura: "+ f.getPercentualGordura() + "\n" + 
+							"\tPeso: " + f.getPeso() + "\n" + 
+							"\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
+							"\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
+							"\tMeta Calórica: " + f.getMetaCalorica() + "\n");
 					combinacoesCaloricas(f.getMetaCalorica(),f);
 				}
 			}
@@ -275,8 +274,16 @@ public class Main {
 			for (int j = i + 1; j < lsAlimentos.size() - 1; j++)
 				for (int k = j + 1; k < lsAlimentos.size(); k++)
 					if (lsAlimentos.get(i).getCaloria() + 
-							lsAlimentos.get(k).getCaloria() + 
-							lsAlimentos.get(j).getCaloria() <= metaCalorica) {
+							lsAlimentos.get(j).getCaloria() + 
+							lsAlimentos.get(k).getCaloria() <= metaCalorica) {
+						
+						if (lsAlimentos.get(i).getGrupo() == lsAlimentos.get(j).getGrupo()) {
+							break;
+						} else if(lsAlimentos.get(j).getGrupo() == lsAlimentos.get(k).getGrupo()) {
+							break;
+						} else if(lsAlimentos.get(i).getGrupo() == lsAlimentos.get(k).getGrupo()) {
+							break;
+						}
 						
 						alimentoCombinado = new AlimentoCombinado();
 						alimentoCombinado.setAlimento1(lsAlimentos.get(i));
@@ -285,13 +292,15 @@ public class Main {
 						lsAlimentoCombinado.add(alimentoCombinado);
 					}
 		
-		System.out.println("\n\t\tMeta: " + metaCalorica + "\n\t\tNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
+		System.out.println("\tNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
+		int numeroDieta = 0;
 		for(AlimentoCombinado a : lsAlimentoCombinado) {
-			
-			System.out.println("\t=== Dieta Sugerida === \n\t" + 
+			numeroDieta++;
+			System.out.println("\t=== Dieta Sugerida [" + numeroDieta + "] === \n\t" + 
 					"Nome:" + a.getAlimento1().getNome() +" | Grupo:" + a.getAlimento1().getGrupo() + " | Caloria:" + a.getAlimento1().getCaloria() + 
 					"\n\tNome:" + a.getAlimento2().getNome() + " | Grupo:" +  a.getAlimento2().getGrupo() + " | Caloria:" + a.getAlimento2().getCaloria() + 
-					"\n\tNome:" + a.getAlimento3().getNome() + " | Grupo:" + a.getAlimento3().getGrupo() + " | Caloria:" + a.getAlimento3().getCaloria() + "\n");
+					"\n\tNome:" + a.getAlimento3().getNome() + " | Grupo:" + a.getAlimento3().getGrupo() + " | Caloria:" + a.getAlimento3().getCaloria() + 
+					"\n\tValor Total Calorias: " + new Integer(a.getAlimento1().getCaloria()+a.getAlimento2().getCaloria()+a.getAlimento3().getCaloria()) + "\n");
 		}
 	}
 		
@@ -306,19 +315,19 @@ public class Main {
 		Alimento a2 = new Alimento();
 		a2.setNome("Pão");
 		a2.setGrupo(1);
-		a2.setCaloria(100);
+		a2.setCaloria(200);
 		lsAlimentos.add(a2);
 
 		Alimento a3 = new Alimento();
 		a3.setNome("Chuchu");
 		a3.setGrupo(2);
-		a3.setCaloria(15);
+		a3.setCaloria(75);
 		lsAlimentos.add(a3);
 
 		Alimento a4 = new Alimento();
 		a4.setNome("Berinjela");
 		a4.setGrupo(2);
-		a4.setCaloria(20);
+		a4.setCaloria(110);
 		lsAlimentos.add(a4);
 
 		Alimento a5 = new Alimento();
