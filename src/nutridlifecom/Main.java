@@ -159,7 +159,7 @@ public class Main {
 	}
 
 	private void listarClientes(Integer num) {
-
+		
 		if (lsClientes.size() == 0) {
 			String cadastrar = textInput("\nNão existe cliente cadastrado! Deseja cadastrar agora? (S/N)\n");
 			if(cadastrar.equalsIgnoreCase("s")) {
@@ -175,7 +175,7 @@ public class Main {
 					"\tEndereço: " + c.getEndereco());				
 			listarFichas(c);		
 		} else {				
-			System.out.println("\nLista de Cadastros\n");
+			System.out.println("\nLista de Clientes\n");
 			for (int i = 0; i < lsClientes.size(); i++) {
 				Cliente c = lsClientes.get(i);
 				System.out.println(
@@ -183,7 +183,7 @@ public class Main {
 					    "\tNome: " + c.getNome() + "\n" + 
 						"\tE-mail: " + c.getEmail()+ "\n" + 
 					    "\tCelular: " + c.getCelular() + "\n" + 
-						"\tEndereço: " + c.getEndereco());	
+						"\tEndereço: " + c.getEndereco() + "\n");	
 			}
 			System.out.println("\n- Fim da lista -\n");
 		}
@@ -198,11 +198,26 @@ public class Main {
 			} else if (item.equalsIgnoreCase("3")) {
 				validaClienteFicha();
 			} else if(item.equalsIgnoreCase("4")) {
-				return;
+				item = menu();
+				if(item.equalsIgnoreCase("n")) {
+					validaClienteFicha();
+			    }else if (item.equalsIgnoreCase("c")) {
+					listarClientes(null);
+				} else if (item.equalsIgnoreCase("a")) {
+					listarAlimentos();
+				} else if (item.equalsIgnoreCase("e")) {
+					System.out.println("\nAplicação encerrada!\n");
+					executar = false;
+					break;
+				} else {
+					System.out.println("\nNenhum opção válida selecionada!\n");
+				}
 			} else {
 				System.out.println("\nNenhum opção válida selecionada!\n");
 			}
 		}
+		
+		
 	}
 
 	private void validaClienteFicha() {
