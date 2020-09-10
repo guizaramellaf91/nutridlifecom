@@ -177,13 +177,20 @@ public class Main {
 		} else {				
 			System.out.println("\nLista de Clientes\n");
 			for (int i = 0; i < lsClientes.size(); i++) {
+				int fi=0;
+				for(FichaNutri f : lsFichaNutri) {
+					if(f.getCliente().equals(lsClientes.get(i))) {
+						fi++;
+					}
+				}
 				Cliente c = lsClientes.get(i);
 				System.out.println(
 						"\tN° Cliente: " + i + "\n" + 
 					    "\tNome: " + c.getNome() + "\n" + 
 						"\tE-mail: " + c.getEmail()+ "\n" + 
 					    "\tCelular: " + c.getCelular() + "\n" + 
-						"\tEndereço: " + c.getEndereco() + "\n");	
+						"\tEndereço: " + c.getEndereco() + "\n" + 
+					    "\tFichas: " + fi + "\n");	
 			}
 			System.out.println("\n- Fim da lista -\n");
 		}
@@ -226,13 +233,6 @@ public class Main {
 		for(Cliente c : lsClientes) {
 			if(c.getEmail().equals(informeEmail)) {
 				cadastrarFicha(c);
-			}else {
-				cadastrar = textInput("\nO e-mail informado não existe! Deseja cadastrar agora? (S/N)\n");
-				if(cadastrar.equalsIgnoreCase("s")) {
-					cadastrarCliente();
-				} else {
-					break;
-				}
 			}
 		}
 		if(lsClientes.size() == 0) {
