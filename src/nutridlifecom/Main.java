@@ -19,14 +19,14 @@ public class Main {
 	private List<FichaNutri> lsFichaNutri;
 	private List<Alimento> lsAlimentos;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Throwable {
+	
 		new Main();
 	}
 
 	private Main() {
 
-		try {
-						
+		try {					
 			System.out.println("\n\t-- BEM VINDO AO NUTRIDLIFECOM by DTIDIGITAL -- \n");
 
 			l = new Scanner(System.in);
@@ -43,7 +43,7 @@ public class Main {
 				if(item.equalsIgnoreCase("n")) {
 					validaClienteFicha();
 			    }else if (item.equalsIgnoreCase("c")) {
-					listarClientes();
+					listarClientes(null);
 				} else if (item.equalsIgnoreCase("a")) {
 					listarAlimentos();
 				} else if (item.equalsIgnoreCase("e")) {
@@ -150,14 +150,28 @@ public class Main {
 		}
 	}
 
-	private void listarClientes() {
+	private void listarClientes(Integer num) {
 
 		if (lsClientes.size() == 0) {
 			String cadastrar = textInput("\nNão existe cliente cadastrado! Deseja cadastrar agora? (S/N)\n");
 			if(cadastrar.equalsIgnoreCase("s")) {
 				cadastrarCliente();
 			}
-		} else {
+			
+		} else if (num != null) {
+			
+			Cliente c = lsClientes.get(num);
+			System.out.println(
+					"\tN° Cliente: " + num + "\n" + 
+				    "\tNome: " + c.getNome() + "\n" + 
+					"\tE-mail: " + c.getEmail()+ "\n" + 
+				    "\tCelular: " + c.getCelular() + "\n" + 
+					"\tEndereço: " + c.getEndereco());	
+			
+			listarFichas(c);
+			
+		} else {	
+			
 			System.out.println("\nLista de Cadastros\n");
 			for (int i = 0; i < lsClientes.size(); i++) {
 				Cliente c = lsClientes.get(i);
@@ -167,8 +181,6 @@ public class Main {
 						"\tE-mail: " + c.getEmail()+ "\n" + 
 					    "\tCelular: " + c.getCelular() + "\n" + 
 						"\tEndereço: " + c.getEndereco());	
-				
-				listarFichas(c);
 			}
 			System.out.println("\n- Fim da lista -\n");
 		}
@@ -177,9 +189,12 @@ public class Main {
 			String item = menuClientes();
 			if (item.equalsIgnoreCase("1")) {
 				cadastrarCliente();
-			} else if (item.equalsIgnoreCase("2")) {			
-				validaClienteFicha();
+			} else if (item.equalsIgnoreCase("2")) {
+				String buscaCliente = textInput("Informe o número do cliente para mais detalhes");
+				listarClientes(Integer.valueOf(buscaCliente));
 			} else if (item.equalsIgnoreCase("3")) {
+				validaClienteFicha();
+			} else if(item.equalsIgnoreCase("4")) {
 				return;
 			} else {
 				System.out.println("\nNenhum opção válida selecionada!\n");
@@ -240,8 +255,9 @@ public class Main {
 	private String menuClientes() {
 		System.out.println("\nSelecione a opção desejada abaixo:\n");
 		System.out.println("[1] - Novo Cliente");
-		System.out.println("[2] - Novo Atendimento");
-		System.out.println("[3] - Voltar");
+		System.out.println("[2] - Visualizar Dados do Cliente");
+		System.out.println("[3] - Novo Atendimento");
+		System.out.println("[4] - Voltar");
 		return l.nextLine();
 	}
 
@@ -269,7 +285,7 @@ public class Main {
 						lsAlimentoCombinado.add(alimentoCombinado);
 					}
 		
-		System.out.println("\nMeta: " + metaCalorica + "\nNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
+		System.out.println("\n\tMeta: " + metaCalorica + "\n\tNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
 		for(AlimentoCombinado a : lsAlimentoCombinado) {
 			
 			System.out.println("\t=== Dieta Sugerida === \n\t" + 
