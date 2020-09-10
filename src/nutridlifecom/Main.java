@@ -76,17 +76,19 @@ public class Main {
 			if (cadastrar.equalsIgnoreCase("s")) {
 				System.out.println("Cadastro realizado com sucesso!\n");
 				lsClientes.add(cliente);
+				
+				String novaFicha = textInput("Gerar ficha nutricional para o cliente? (S/N)");
+
+				if (novaFicha.equalsIgnoreCase("s")) {
+					cadastrarFicha(cliente);
+				}else {
+					listarClientes(null);
+				}
 			} else if (cadastrar.equalsIgnoreCase("n")) {
 				System.out.println("Cadastro cancelado!\n");
 			} else {
 				System.out.println("\nOpção inválida!\n");
 			}
-
-			String novaFicha = textInput("Gerar ficha nutricional para o cliente? (S/N)");
-
-			if (novaFicha.equalsIgnoreCase("s")) {
-				cadastrarFicha(cliente);
-			}			
 		} catch (Exception e) {
 			System.out.println("[ERROR] Ops! cadastrarCliente: " + e.getMessage() + "\n");
 		}
@@ -116,7 +118,8 @@ public class Main {
 				listarFichas(cliente);
 								
 			} else if (cadastrar.equalsIgnoreCase("n")) {
-				System.out.println("Cadastro cancelado!\n");
+				System.out.println("Cadastro da ficha cancelado!\n");
+				listarClientes(null);
 			} else {
 				System.out.println("\nOpção inválida!\n");
 			}
@@ -128,7 +131,13 @@ public class Main {
 	private void listarFichas(Cliente cliente) {
 
 		if (lsFichaNutri.size() == 0) {
-			System.out.println("\nNão existe ficha cadastrada para o cliente!\n");
+			String acao = textInput("\nNão existe ficha cadastrada para o cliente! Deseja cadastrar agora? (S/N)\n");
+			if(acao.equalsIgnoreCase("s")) {
+				cadastrarFicha(cliente);
+			}else {
+				listarClientes(null);
+			}
+			System.out.println();
 		} else {
 			System.out.println("\n\t== Histórico de fichas de " + cliente.getNome() + " ==\n");
 			for (int i = 0; i < lsFichaNutri.size(); i++) {
@@ -155,22 +164,17 @@ public class Main {
 			String cadastrar = textInput("\nNão existe cliente cadastrado! Deseja cadastrar agora? (S/N)\n");
 			if(cadastrar.equalsIgnoreCase("s")) {
 				cadastrarCliente();
-			}
-			
-		} else if (num != null) {
-			
+			}		
+		} else if (num != null) {		
 			Cliente c = lsClientes.get(num);
 			System.out.println(
 					"\tN° Cliente: " + num + "\n" + 
 				    "\tNome: " + c.getNome() + "\n" + 
 					"\tE-mail: " + c.getEmail()+ "\n" + 
 				    "\tCelular: " + c.getCelular() + "\n" + 
-					"\tEndereço: " + c.getEndereco());	
-			
-			listarFichas(c);
-			
-		} else {	
-			
+					"\tEndereço: " + c.getEndereco());				
+			listarFichas(c);		
+		} else {				
 			System.out.println("\nLista de Cadastros\n");
 			for (int i = 0; i < lsClientes.size(); i++) {
 				Cliente c = lsClientes.get(i);
