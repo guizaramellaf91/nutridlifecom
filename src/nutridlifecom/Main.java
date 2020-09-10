@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Alimento;
+import model.AlimentoCombinado;
+import model.Cliente;
+import model.FichaNutri;
+
 public class Main {
 
 	private Scanner l;
@@ -31,9 +36,7 @@ public class Main {
 			lsAlimentos = new ArrayList<Alimento>();
 			
 			populaAlimentos();
-			
-	        gerarProabilidades();
-			
+						
 			while (executar) {
 				String item = menu();
 				
@@ -104,6 +107,8 @@ public class Main {
 			fichaNutri.setRestricaoAlimentar(textInput("Restrição Alimentar: "));
 			fichaNutri.setMetaCalorica(Integer.valueOf(textInput("Informe a meta calórica: ")));
 			
+			combinacoesCaloricas(fichaNutri.getMetaCalorica());
+			
 			String cadastrar = textInput("Confirmar ficha (S/N) ?");
 			if (cadastrar.equalsIgnoreCase("s")) {
 
@@ -139,6 +144,7 @@ public class Main {
 							"\t\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
 							"\t\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
 							"\t\tMeta Calórica: " + f.getMetaCalorica() + "\n");
+					combinacoesCaloricas(f.getMetaCalorica());
 				}
 			}
 		}
@@ -215,7 +221,7 @@ public class Main {
 			for (int i = 0; i < lsAlimentos.size(); i++) {
 				Alimento a = lsAlimentos.get(i);
 				System.out.println("\tN°: " + i);
-				System.out.println("\tNome: " + a.getNome() + "\n" + "\tGrupo Alimentar: " + a.getGrupoAlimentar()
+				System.out.println("\tNome: " + a.getNome() + "\n" + "\tGrupo Alimentar: " + a.getGrupo()
 						+ "\n" + "\tValor Calórico: " + a.getCaloria() + "\n");
 			}
 			System.out.println("\n- Fim da lista -\n");
@@ -244,74 +250,70 @@ public class Main {
 		return l.nextLine();
 	}
 
-	private void gerarProabilidades() {
-		
-		combinacoesAlimento(150);
-	}
-	
-	private void combinacoesAlimento(Integer metaCalorica) {
+	private void combinacoesCaloricas(Integer metaCalorica) {
 				
-		List<Alimento> alimentos = new ArrayList<Alimento>();
-		List<Object> items = new ArrayList<Object>();
-			
+		AlimentoCombinado alimentoCombinado;
+		List<AlimentoCombinado> lsAlimentoCombinado = new ArrayList<AlimentoCombinado>();
+				
 		for (int i = 0; i < lsAlimentos.size() - 2; i++)
 			for (int j = i + 1; j < lsAlimentos.size() - 1; j++)
 				for (int k = j + 1; k < lsAlimentos.size(); k++)
-			
-			if (lsAlimentos.get(i).getCaloria() + 
-					lsAlimentos.get(k).getCaloria() + 
-					lsAlimentos.get(j).getCaloria() <= metaCalorica) {
-				
-				alimentos = new ArrayList<Alimento>();
-				alimentos.add(lsAlimentos.get(i));
-				alimentos.add(lsAlimentos.get(j));
-				alimentos.add(lsAlimentos.get(k));
-				items.add(alimentos);
-			}
+					if (lsAlimentos.get(i).getCaloria() + 
+							lsAlimentos.get(k).getCaloria() + 
+							lsAlimentos.get(j).getCaloria() <= metaCalorica) {
+						
+						alimentoCombinado = new AlimentoCombinado();
+						alimentoCombinado.setAlimento1(lsAlimentos.get(i));
+						alimentoCombinado.setAlimento2(lsAlimentos.get(j));
+						alimentoCombinado.setAlimento3(lsAlimentos.get(k));
+						lsAlimentoCombinado.add(alimentoCombinado);
+					}
 		
-		System.out.println("\nPossíveis combinações: " + items.size() + " \n");
-		
-		for(Object obj : items) {
+		System.out.println("\nMeta: " + metaCalorica + "\nNúmero de Combinações: " + lsAlimentoCombinado.size() + "\n");
+		for(AlimentoCombinado a : lsAlimentoCombinado) {
 			
-			System.out.println(obj.getClass().toString());
+			System.out.println("\t=== Dieta Sugerida === \n\t" + 
+					"Nome:" + a.getAlimento1().getNome() +" | Grupo:" + a.getAlimento1().getGrupo() + " | Caloria:" + a.getAlimento1().getCaloria() + 
+					"\n\tNome:" + a.getAlimento2().getNome() + " | Grupo:" +  a.getAlimento2().getGrupo() + " | Caloria:" + a.getAlimento2().getCaloria() + 
+					"\n\tNome:" + a.getAlimento3().getNome() + " | Grupo:" + a.getAlimento3().getGrupo() + " | Caloria:" + a.getAlimento3().getCaloria() + "\n");
 		}
 	}
-	
+		
 	private void populaAlimentos() {
 
 		Alimento a1 = new Alimento();
 		a1.setNome("Cereal");
-		a1.setGrupoAlimentar("Grupo 1");
+		a1.setGrupo(1);
 		a1.setCaloria(150);
 		lsAlimentos.add(a1);
 
 		Alimento a2 = new Alimento();
 		a2.setNome("Pão");
-		a2.setGrupoAlimentar("Grupo 1");
+		a2.setGrupo(1);
 		a2.setCaloria(100);
 		lsAlimentos.add(a2);
 
 		Alimento a3 = new Alimento();
 		a3.setNome("Chuchu");
-		a3.setGrupoAlimentar("Grupo 2");
+		a3.setGrupo(2);
 		a3.setCaloria(15);
 		lsAlimentos.add(a3);
 
 		Alimento a4 = new Alimento();
 		a4.setNome("Berinjela");
-		a4.setGrupoAlimentar("Grupo 2");
+		a4.setGrupo(2);
 		a4.setCaloria(20);
 		lsAlimentos.add(a4);
 
 		Alimento a5 = new Alimento();
 		a5.setNome("Banana");
-		a5.setGrupoAlimentar("Grupo 3");
+		a5.setGrupo(3);
 		a5.setCaloria(50);
 		lsAlimentos.add(a5);
 
 		Alimento a6 = new Alimento();
 		a6.setNome("Uva");
-		a6.setGrupoAlimentar("Grupo 3");
+		a6.setGrupo(3);
 		a6.setCaloria(65);
 		lsAlimentos.add(a6);
 	}

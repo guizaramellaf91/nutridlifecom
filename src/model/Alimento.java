@@ -1,9 +1,9 @@
-package nutridlifecom;
+package model;
 
 public class Alimento {
 	
 	private String nome;
-	private String grupoAlimentar;
+	private Integer grupo;
 	private Integer caloria;
 	
 	public String getNome() {
@@ -12,11 +12,11 @@ public class Alimento {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getGrupoAlimentar() {
-		return grupoAlimentar;
+	public Integer getGrupo() {
+		return grupo;
 	}
-	public void setGrupoAlimentar(String grupoAlimentar) {
-		this.grupoAlimentar = grupoAlimentar;
+	public void setGrupo(Integer grupo) {
+		this.grupo = grupo;
 	}
 	public Integer getCaloria() {
 		return caloria;

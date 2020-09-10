@@ -1,4 +1,4 @@
-package nutridlifecom;
+package model;
 
 import java.time.LocalDateTime;
 
