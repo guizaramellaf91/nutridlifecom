@@ -302,11 +302,11 @@ public class Main {
 		int numeroDieta = 0;
 		for(AlimentoCombinado a : lsAlimentoCombinado) {
 			numeroDieta++;
-			System.out.println("\t=== Dieta Sugerida [" + numeroDieta + "] === \n\t" + 
-					"Nome:" + a.getAlimento1().getNome() +" | Grupo:" + a.getAlimento1().getGrupo() + " | Caloria:" + a.getAlimento1().getCaloria() + 
-					"\n\tNome:" + a.getAlimento2().getNome() + " | Grupo:" +  a.getAlimento2().getGrupo() + " | Caloria:" + a.getAlimento2().getCaloria() + 
-					"\n\tNome:" + a.getAlimento3().getNome() + " | Grupo:" + a.getAlimento3().getGrupo() + " | Caloria:" + a.getAlimento3().getCaloria() + 
-					"\n\tValor Total Calorias: " + new Integer(a.getAlimento1().getCaloria()+a.getAlimento2().getCaloria()+a.getAlimento3().getCaloria()) + "\n");
+			System.out.println("\t\t=== Dieta Sugerida [" + numeroDieta + "] ===" + 
+					"\n\t\tNome:" + a.getAlimento1().getNome() +" | Grupo:" + a.getAlimento1().getGrupo() + " | Caloria:" + a.getAlimento1().getCaloria() + 
+					"\n\t\tNome:" + a.getAlimento2().getNome() + " | Grupo:" +  a.getAlimento2().getGrupo() + " | Caloria:" + a.getAlimento2().getCaloria() + 
+					"\n\t\tNome:" + a.getAlimento3().getNome() + " | Grupo:" + a.getAlimento3().getGrupo() + " | Caloria:" + a.getAlimento3().getCaloria() + 
+					"\n\t\tValor Total Calorias: " + new Integer(a.getAlimento1().getCaloria()+a.getAlimento2().getCaloria()+a.getAlimento3().getCaloria()) + "\n");
 		}
 	}
 		
