@@ -35,7 +35,7 @@ public class Main {
 			lsFichaNutri = new ArrayList<FichaNutri>();
 			lsAlimentos = new ArrayList<Alimento>();
 			
-			populaAlimentos();
+			populaSistema();
 								
 			while (executar) {
 				String item = menu();
@@ -59,6 +59,32 @@ public class Main {
 		}
 	}
 
+	private void cadastrarAlimento() {
+
+		try {
+
+			System.out.println("-- Cadastro de Alimento --\n");
+			Alimento alimento = new Alimento();
+			alimento.setNome(textInput("Nome do Alimento:"));
+			alimento.setGrupo(Integer.valueOf(textInput("Digite 1, 2 ou 3: ")));
+			alimento.setCaloria(Integer.valueOf(textInput("Informe o valor de calorias: ")));
+
+			String cadastrar = textInput("Confirmar cadastro do alimento (S/N) ?");
+			
+			if (cadastrar.equalsIgnoreCase("s")) {
+				System.out.println("Cadastro do alimento realizado com sucesso!\n");
+				lsAlimentos.add(alimento);
+				
+			} else if (cadastrar.equalsIgnoreCase("n")) {
+				System.out.println("Cadastro do alimento cancelado!\n");
+			} else {
+				System.out.println("\nOpção inválida!\n");
+			}
+		} catch (Exception e) {
+			System.out.println("[ERROR] Ops! cadastrarAlimento: " + e.getMessage() + "\n");
+		}
+	}
+	
 	private void cadastrarCliente() {
 
 		try {
@@ -135,7 +161,7 @@ public class Main {
 			if(acao.equalsIgnoreCase("s")) {
 				cadastrarFicha(cliente);
 			}else {
-				listarClientes(null);
+				return;
 			}
 			System.out.println();
 		} else {
@@ -195,36 +221,31 @@ public class Main {
 			System.out.println("\n- Fim da lista -\n");
 		}
 
-		while (true) {
-			String item = menuClientes();
-			if (item.equalsIgnoreCase("1")) {
-				cadastrarCliente();
-			} else if (item.equalsIgnoreCase("2")) {
-				String buscaCliente = textInput("Informe o número do cliente para mais detalhes");
-				listarClientes(Integer.valueOf(buscaCliente));
-			} else if (item.equalsIgnoreCase("3")) {
+		String item = menuClientes();
+		if (item.equalsIgnoreCase("1")) {
+			cadastrarCliente();
+		} else if (item.equalsIgnoreCase("2")) {
+			String buscaCliente = textInput("Informe o número do cliente para mais detalhes");
+			listarClientes(Integer.valueOf(buscaCliente));
+		} else if (item.equalsIgnoreCase("3")) {
+			validaClienteFicha();
+		} else if(item.equalsIgnoreCase("4")) {
+			item = menu();
+			if(item.equalsIgnoreCase("n")) {
 				validaClienteFicha();
-			} else if(item.equalsIgnoreCase("4")) {
-				item = menu();
-				if(item.equalsIgnoreCase("n")) {
-					validaClienteFicha();
-			    }else if (item.equalsIgnoreCase("c")) {
-					listarClientes(null);
-				} else if (item.equalsIgnoreCase("a")) {
-					listarAlimentos();
-				} else if (item.equalsIgnoreCase("e")) {
-					System.out.println("\nAplicação encerrada!\n");
-					executar = false;
-					break;
-				} else {
-					System.out.println("\nNenhum opção válida selecionada!\n");
-				}
+		    }else if (item.equalsIgnoreCase("c")) {
+				listarClientes(null);
+			} else if (item.equalsIgnoreCase("a")) {
+				listarAlimentos();
+			} else if (item.equalsIgnoreCase("e")) {
+				System.out.println("\nAplicação encerrada!\n");
+				executar = false;
 			} else {
 				System.out.println("\nNenhum opção válida selecionada!\n");
 			}
-		}
-		
-		
+		} else {
+			System.out.println("\nNenhum opção válida selecionada!\n");
+		}	
 	}
 
 	private void validaClienteFicha() {
@@ -258,6 +279,10 @@ public class Main {
 						+ "\n" + "\tValor Calórico: " + a.getCaloria() + "\n");
 			}
 			System.out.println("\n- Fim da lista -\n");
+			String cadastrarAlimento = textInput("Deseja cadastrar um novo alimento? (S/N)");
+			if(cadastrarAlimento.equalsIgnoreCase("s")) {
+				cadastrarAlimento();
+			}
 		}
 	}
 
@@ -325,8 +350,24 @@ public class Main {
 		}
 	}
 		
-	private void populaAlimentos() {
-
+	private void populaSistema() {
+		
+		Cliente c1 = new Cliente();
+		c1.setNome("Fulano Exemplo");
+		c1.setEmail("teste@gmail.com");
+		c1.setCelular("31980105874");
+		c1.setDataNascimento("23-10-1991");
+		c1.setEndereco("Rua Exemplo, 123 - BH/MG");
+		lsClientes.add(c1);
+		
+		Cliente c2 = new Cliente();
+		c2.setNome("Beltrano Exemplo");
+		c2.setEmail("teste2@gmail.com");
+		c2.setCelular("31980103874");
+		c2.setDataNascimento("23-10-1993");
+		c2.setEndereco("Rua Exemplo, 321 - BH/MG");
+		lsClientes.add(c2);
+		
 		Alimento a1 = new Alimento();
 		a1.setNome("Cereal");
 		a1.setGrupo(1);
