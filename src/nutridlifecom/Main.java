@@ -92,7 +92,15 @@ public class Main {
 			System.out.println("-- Cadastro de Cliente --\n");
 			Cliente cliente = new Cliente();
 			cliente.setNome(textInput("Nome:"));
-			cliente.setEmail(textInput("E-mail: "));
+			String validaEmail = textInput("E-mail: "); 
+			for(Cliente c : lsClientes) {
+				if(validaEmail.equals(c.getEmail())) {
+					System.out.println("O e-mail informado já existe! Informe outro e-mail!\n");
+					cadastrarCliente();
+					return;
+				}
+			}
+			cliente.setEmail(validaEmail);
 			cliente.setCelular(textInput("Celular: "));
 			cliente.setDataNascimento(textInput("Nascimento: "));
 			cliente.setEndereco(textInput("Endereço: "));
@@ -124,7 +132,7 @@ public class Main {
 
 		try {
 
-			System.out.println("\n-- Cadastro de Ficha Nutricional para " + cliente.getNome() + " --\n");
+			System.out.println("\n-- Cadastro de Ficha Nutricional para [ " + cliente.getNome() + " ] --\n");
 			FichaNutri fichaNutri = new FichaNutri();
 			fichaNutri.setCliente(cliente);
 			fichaNutri.setDataCadastro(LocalDateTime.now());
@@ -134,7 +142,7 @@ public class Main {
 			fichaNutri.setRestricaoAlimentar(textInput("Restrição Alimentar: "));
 			fichaNutri.setMetaCalorica(Integer.valueOf(textInput("Informe a meta calórica: ")));
 			
-			combinacoesCaloricas(fichaNutri.getMetaCalorica(),fichaNutri);
+			combinacoesCaloricas(fichaNutri.getMetaCalorica());
 			
 			String cadastrar = textInput("Confirmar ficha (S/N) ?");
 			if (cadastrar.equalsIgnoreCase("s")) {
@@ -173,12 +181,12 @@ public class Main {
 					System.out.println("\tN° Ficha: " + i + "\n" + 
 							"\tData Cadastro: " + f.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "\n" + 
 							"\tCliente: " + f.getCliente().getNome() + "\n" + 
-							"\t% de gordura: "+ f.getPercentualGordura() + "\n" + 
-							"\tPeso: " + f.getPeso() + "\n" + 
+							"\t% de gordura: "+ f.getPercentualGordura() + " %\n" + 
+							"\tPeso: " + f.getPeso() + " Kg\n" + 
 							"\tSensação Física: " + f.getSensacaoFisica() + "\n" + 
 							"\tRestrição Alimentar: " + f.getRestricaoAlimentar() + "\n" + 
 							"\tMeta Calórica: " + f.getMetaCalorica() + "\n");
-					combinacoesCaloricas(f.getMetaCalorica(),f);
+					combinacoesCaloricas(f.getMetaCalorica());
 				}
 			}
 		}
@@ -309,7 +317,7 @@ public class Main {
 		return l.nextLine();
 	}
 
-	private void combinacoesCaloricas(Integer metaCalorica, FichaNutri fichaNutri) {
+	private void combinacoesCaloricas(Integer metaCalorica) {
 				
 		AlimentoCombinado alimentoCombinado;
 		List<AlimentoCombinado> lsAlimentoCombinado = new ArrayList<AlimentoCombinado>();
