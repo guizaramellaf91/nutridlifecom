@@ -27,7 +27,7 @@ public class Main {
 	private Main() {
 
 		try {					
-			System.out.println("\n\t-- BEM VINDO AO NUTRIDLIFECOM by DTIDIGITAL -- \n");
+			System.out.println("\n\t-- BEM VINDO AO NUTRIDLIFECOM -- \n");
 
 			l = new Scanner(System.in);
 			executar = true;
@@ -360,21 +360,21 @@ public class Main {
 		
 	private void populaSistema() {
 		
-		Cliente c1 = new Cliente();
-		c1.setNome("Fulano Exemplo");
-		c1.setEmail("teste@gmail.com");
-		c1.setCelular("31980105874");
-		c1.setDataNascimento("23-10-1991");
-		c1.setEndereco("Rua Exemplo, 123 - BH/MG");
-		lsClientes.add(c1);
-		
-		Cliente c2 = new Cliente();
-		c2.setNome("Beltrano Exemplo");
-		c2.setEmail("teste2@gmail.com");
-		c2.setCelular("31980103874");
-		c2.setDataNascimento("23-10-1993");
-		c2.setEndereco("Rua Exemplo, 321 - BH/MG");
-		lsClientes.add(c2);
+//		Cliente c1 = new Cliente();
+//		c1.setNome("Fulano Exemplo");
+//		c1.setEmail("teste@gmail.com");
+//		c1.setCelular("31980105874");
+//		c1.setDataNascimento("23-10-1991");
+//		c1.setEndereco("Rua Exemplo, 123 - BH/MG");
+//		lsClientes.add(c1);
+//		
+//		Cliente c2 = new Cliente();
+//		c2.setNome("Beltrano Exemplo");
+//		c2.setEmail("teste2@gmail.com");
+//		c2.setCelular("31980103874");
+//		c2.setDataNascimento("23-10-1993");
+//		c2.setEndereco("Rua Exemplo, 321 - BH/MG");
+//		lsClientes.add(c2);
 		
 		Alimento a1 = new Alimento();
 		a1.setNome("Cereal");
